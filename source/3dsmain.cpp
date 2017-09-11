@@ -78,6 +78,7 @@ void LoadDefaultSettings() {
     settings3DS.ButtonMappingsSnes[static_cast<size_t>(SnesButtons::Start )].SetSingleMapping(KEY_START);
     settings3DS.ButtonMappingsSnes[static_cast<size_t>(SnesButtons::Select)].SetSingleMapping(KEY_SELECT);
 
+    settings3DS.ButtonHotkeyOpenMenu.SetSingleMapping(0);
     settings3DS.ButtonHotkeyDisableFramelimit.SetSingleMapping(0);
 }
 
@@ -493,6 +494,13 @@ std::vector<SMenuItem> makeControlsMenu() {
         }
     }
 
+    AddMenuPicker( items, "Open Emulator Menu", ""s, makeOptionsForButtonMapping(), settings3DS.ButtonHotkeyOpenMenu.MappingBitmasks[0], DIALOGCOLOR_CYAN, true,
+        []( int val ) {
+            uint32 v = static_cast<uint32>(val);
+            CheckAndUpdate( settings3DS.ButtonHotkeyOpenMenu.MappingBitmasks[0], v, settings3DS.Changed );
+        }
+    );
+
     AddMenuPicker( items, "Disable Framelimit", ""s, makeOptionsForButtonMapping(), settings3DS.ButtonHotkeyDisableFramelimit.MappingBitmasks[0], DIALOGCOLOR_CYAN, true,
         []( int val ) {
             uint32 v = static_cast<uint32>(val);
@@ -699,6 +707,7 @@ bool settingsReadWriteFullListByGame(bool writeMode)
     }
 
     config3dsReadWriteBitmask("ButtonMappingDisableFramelimitHold_0=%d\n", &settings3DS.ButtonHotkeyDisableFramelimit.MappingBitmasks[0]);
+    config3dsReadWriteBitmask("ButtonMappingOpenEmulatorMenu_0=%d\n", &settings3DS.ButtonHotkeyOpenMenu.MappingBitmasks[0]);
 
     // All new options should come here!
 
