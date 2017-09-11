@@ -103,5 +103,7 @@ typedef struct
 
     ButtonMappings3dsToSnes ButtonMappingsSnes; // Stores which 3DS button(s) map to each SNES button.
 
+    ButtonMapping<1> ButtonHotkeyDisableFramelimit; // Stores button that can be held to disable the frame limit.
+
     bool    Changed = false;                // Stores whether the configuration has been changed and should be written.
 } S9xSettings3DS;
